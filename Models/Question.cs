@@ -11,6 +11,9 @@ namespace NanoSurveyAPI.Models
         public int Id { get; set; }
 
         [Required]
+        public int Number { get; set; }
+
+        [Required]
         [MaxLength(200)]
         public string Text { get; set; }
 
@@ -18,6 +21,6 @@ namespace NanoSurveyAPI.Models
 
         public ICollection<Answer> Answers { get; set; } = new List<Answer>();
 
-        public ICollection<Result> Results { get; set; } = new List<Result>();
+        //public ICollection<Result> Results { get; set; } = new List<Result>();
     }
 }

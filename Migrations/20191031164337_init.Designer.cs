@@ -10,8 +10,8 @@ using NanoSurveyAPI.Models;
 namespace NanoSurveyAPI.Migrations
 {
     [DbContext(typeof(NanoSurveyContext))]
-    [Migration("20191030185524_NanoSurveyDBIncreaseSurveyDescriptionMaxLenght")]
-    partial class NanoSurveyDBIncreaseSurveyDescriptionMaxLenght
+    [Migration("20191031164337_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -71,6 +71,8 @@ namespace NanoSurveyAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Number");
+
                     b.Property<int?>("SurveyId");
 
                     b.Property<string>("Text")
@@ -92,17 +94,13 @@ namespace NanoSurveyAPI.Migrations
 
                     b.Property<int?>("AnswerId");
 
-                    b.Property<int?>("InteviewId");
-
-                    b.Property<int?>("QuestionId");
+                    b.Property<int?>("InterviewId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AnswerId");
 
-                    b.HasIndex("InteviewId");
-
-                    b.HasIndex("QuestionId");
+                    b.HasIndex("InterviewId");
 
                     b.ToTable("Results");
                 });
@@ -148,13 +146,9 @@ namespace NanoSurveyAPI.Migrations
                         .WithMany("Results")
                         .HasForeignKey("AnswerId");
 
-                    b.HasOne("NanoSurveyAPI.Models.Interview", "Inteview")
+                    b.HasOne("NanoSurveyAPI.Models.Interview", "Interview")
                         .WithMany("Results")
-                        .HasForeignKey("InteviewId");
-
-                    b.HasOne("NanoSurveyAPI.Models.Question", "Question")
-                        .WithMany("Results")
-                        .HasForeignKey("QuestionId");
+                        .HasForeignKey("InterviewId");
                 });
 #pragma warning restore 612, 618
         }

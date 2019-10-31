@@ -10,37 +10,100 @@ namespace NanoSurveyAPI
     {
         public static void EnsureSeedDataForContext(this NanoSurveyContext context)
         {
-            if (context.Surveys.Any())
+            if (!context.Surveys.Any())
             {
-                return;
-            }
-
-            // init seed data
-            var surveys = new List<Survey>()
-            {
-                new Survey()
+                var surveys = new List<Survey>()
                 {
-                    Description = "A simple survey about work.",
-                    Questions = new List<Question>()
+                    new Survey()
                     {
-                        new Question()
+                        Description = "A simple work interview.",
+                        Questions = new List<Question>()
                         {
-                            Text = "Where the company you work for is located?"
-                        },
-                        new Question()
-                        {
-                            Text = "How long does it take you to get to the place of work?"
-                        },
-                        new Question()
-                        {
-                            Text = "Which kind of transport do you use?"
+                            new Question()
+                            {
+                                Number = 1,
+                                Text = "Where your place of work is located?",
+                                Answers = new List<Answer>()
+                                {
+                                    new Answer()
+                                    {
+                                        Text = "Moscow"
+                                    },
+                                    new Answer()
+                                    {
+                                        Text = "Moscow region"
+                                    },
+                                    new Answer()
+                                    {
+                                        Text = "St. Petersburg"
+                                    },
+                                    new Answer()
+                                    {
+                                        Text = "Other"
+                                    }
+                                }
+                            },
+                            new Question()
+                            {
+                                Number = 2,
+                                Text = "How long does it take you to get to your place of work?",
+                                Answers = new List<Answer>()
+                                {
+                                    new Answer()
+                                    {
+                                        Text = "Less than 30 minutes."
+                                    },
+                                    new Answer()
+                                    {
+                                        Text = "From 30 to 60 minutes."
+                                    },
+                                    new Answer()
+                                    {
+                                        Text = "From 1 to 2 hours."
+                                    },
+                                    new Answer()
+                                    {
+                                        Text = "More than 2 hours."
+                                    }
+                                }
+                            },
+                            new Question()
+                            {
+                                Number = 3,
+                                Text = "Which mean of transport do you usually use?",
+                                Answers = new List<Answer>()
+                                {
+                                    new Answer()
+                                    {
+                                        Text = "Buses, trams, etc."
+                                    },
+                                    new Answer()
+                                    {
+                                        Text = "Underground"
+                                    },
+                                    new Answer()
+                                    {
+                                        Text = "Taxi"
+                                    },
+                                    new Answer()
+                                    {
+                                        Text = "Personal car"
+                                    }
+                                }
+                            }
                         }
                     }
-                }
-            };
+                };
 
-            context.Surveys.AddRange(surveys);
-            context.SaveChanges();
+                context.Surveys.AddRange(surveys);
+                context.SaveChanges();
+            }
+
+            
+
+            return;
+            // init seed data
+            
         }
     }
 }

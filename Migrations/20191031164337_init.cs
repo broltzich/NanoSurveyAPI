@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace NanoSurveyAPI.Migrations
 {
-    public partial class NanoSurveyDBInitialMigration : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,7 @@ namespace NanoSurveyAPI.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Description = table.Column<string>(maxLength: 200, nullable: true)
+                    Description = table.Column<string>(maxLength: 300, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -49,6 +49,7 @@ namespace NanoSurveyAPI.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Number = table.Column<int>(nullable: false),
                     Text = table.Column<string>(maxLength: 200, nullable: false),
                     SurveyId = table.Column<int>(nullable: true)
                 },
@@ -89,8 +90,7 @@ namespace NanoSurveyAPI.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    InteviewId = table.Column<int>(nullable: true),
-                    QuestionId = table.Column<int>(nullable: true),
+                    InterviewId = table.Column<int>(nullable: true),
                     AnswerId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -103,15 +103,9 @@ namespace NanoSurveyAPI.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Results_Interviews_InteviewId",
-                        column: x => x.InteviewId,
+                        name: "FK_Results_Interviews_InterviewId",
+                        column: x => x.InterviewId,
                         principalTable: "Interviews",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Results_Questions_QuestionId",
-                        column: x => x.QuestionId,
-                        principalTable: "Questions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -137,14 +131,9 @@ namespace NanoSurveyAPI.Migrations
                 column: "AnswerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Results_InteviewId",
+                name: "IX_Results_InterviewId",
                 table: "Results",
-                column: "InteviewId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Results_QuestionId",
-                table: "Results",
-                column: "QuestionId");
+                column: "InterviewId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

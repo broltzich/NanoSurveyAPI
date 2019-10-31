@@ -69,6 +69,8 @@ namespace NanoSurveyAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Number");
+
                     b.Property<int?>("SurveyId");
 
                     b.Property<string>("Text")
@@ -90,17 +92,13 @@ namespace NanoSurveyAPI.Migrations
 
                     b.Property<int?>("AnswerId");
 
-                    b.Property<int?>("InteviewId");
-
-                    b.Property<int?>("QuestionId");
+                    b.Property<int?>("InterviewId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AnswerId");
 
-                    b.HasIndex("InteviewId");
-
-                    b.HasIndex("QuestionId");
+                    b.HasIndex("InterviewId");
 
                     b.ToTable("Results");
                 });
@@ -146,13 +144,9 @@ namespace NanoSurveyAPI.Migrations
                         .WithMany("Results")
                         .HasForeignKey("AnswerId");
 
-                    b.HasOne("NanoSurveyAPI.Models.Interview", "Inteview")
+                    b.HasOne("NanoSurveyAPI.Models.Interview", "Interview")
                         .WithMany("Results")
-                        .HasForeignKey("InteviewId");
-
-                    b.HasOne("NanoSurveyAPI.Models.Question", "Question")
-                        .WithMany("Results")
-                        .HasForeignKey("QuestionId");
+                        .HasForeignKey("InterviewId");
                 });
 #pragma warning restore 612, 618
         }
