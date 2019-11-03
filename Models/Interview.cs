@@ -18,7 +18,7 @@ namespace NanoSurveyAPI.Models
         [MaxLength(50)]
         public string LastName { get; set; }
 
-        public DateTime BirthDate { get; set; }
+        public DateTime Date { get; set; }
 
         public Survey Survey { get; set; }
 

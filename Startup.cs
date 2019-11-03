@@ -29,6 +29,10 @@ namespace NanoSurveyAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler();
+            }
 
             nanoSurveyContext.EnsureSeedDataForContext();
 

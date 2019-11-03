@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NanoSurveyAPI.Models;
 
 namespace NanoSurveyAPI.Migrations
 {
     [DbContext(typeof(NanoSurveyContext))]
-    partial class NanoSurveyContextModelSnapshot : ModelSnapshot
+    [Migration("20191102155322_DBInterviewDate")]
+    partial class DBInterviewDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

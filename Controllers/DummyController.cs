@@ -22,5 +22,8 @@ namespace NanoSurveyAPI.Controllers
         {
             return Ok();
         }
+
+        //[HttpGet]
+        //[Route("api/question/{}")]
     }
 }
