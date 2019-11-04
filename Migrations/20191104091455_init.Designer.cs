@@ -10,8 +10,8 @@ using NanoSurveyAPI.Models;
 namespace NanoSurveyAPI.Migrations
 {
     [DbContext(typeof(NanoSurveyContext))]
-    [Migration("20191102155322_DBInterviewDate")]
-    partial class DBInterviewDate
+    [Migration("20191104091455_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

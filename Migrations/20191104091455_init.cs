@@ -29,7 +29,7 @@ namespace NanoSurveyAPI.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     FirstName = table.Column<string>(maxLength: 50, nullable: false),
                     LastName = table.Column<string>(maxLength: 50, nullable: false),
-                    BirthDate = table.Column<DateTime>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false),
                     SurveyId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
