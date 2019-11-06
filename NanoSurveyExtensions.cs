@@ -174,12 +174,6 @@ namespace NanoSurveyAPI
                 context.Interviews.AddRange(interviews);
                 context.SaveChanges();
             }
-
-            
-
-            return;
-            // init seed data
-            
         }
     }
 }

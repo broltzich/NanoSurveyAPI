@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NanoSurveyAPI.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,6 +14,6 @@ namespace NanoSurveyAPI.ViewModels
 
         public string Text { get; set; }
 
-        public ICollection<AnswerDto> Answers { get; set; } = new List<AnswerDto>();
+        public ICollection<AnswerDto> Answers { get; set; }
     }
 }

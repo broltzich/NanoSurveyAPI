@@ -10,44 +10,44 @@ using System.Threading.Tasks;
 
 namespace NanoSurveyAPI.Controllers
 {
-    [Route("api/surveys")]
+    [Route("api/[controller]")]
     public class InterviewsController : Controller
     {
-        private NanoSurveyContext _ctx;
+        private readonly NanoSurveyContext _ctx;
 
         public InterviewsController(NanoSurveyContext ctx)
         {
             _ctx = ctx;
         }
 
-        [HttpPost("{surveyId}")]
-        public IActionResult PostInterview(int surveyId, [FromBody] InterviewForCreationDto interview)
-        {
-            if (interview == null)
-            {
-                return BadRequest();
-            }
+        //[HttpPost("{surveyId}")]
+        //public IActionResult Create3Interview(int surveyId, [FromBody] InterviewForCreationDto interview)
+        //{
+        //    if (interview == null)
+        //    {
+        //        return BadRequest();
+        //    }
                 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            var survey = _ctx.Surveys.FirstOrDefault(s => s.Id == surveyId);
+        //    var survey = _ctx.Surveys.FirstOrDefault(s => s.Id == surveyId);
 
-            if (survey == null)
-            {
-                NotFound();
-            }
+        //    if (survey == null)
+        //    {
+        //        NotFound();
+        //    }
 
-            survey.Interviews.Add(new Interview { FirstName = interview.FirstName, LastName = interview.LastName });
-            _ctx.SaveChanges();
+        //    survey.Interviews.Add(new Interview { FirstName = interview.FirstName, LastName = interview.LastName });
+        //    _ctx.SaveChanges();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        [HttpPut("{surveyId}/interviews/{interviewId}/questions/{questionId}")]
-        public IActionResult SavetResult(int surveyId, int interviewId, int questionId, [FromBody] int answerId)
+        [HttpPut("{interviewId}/questions/{questionId}")]
+        public IActionResult SavetResult(int interviewId, int questionId, [FromBody] int answerId)
         {
             var currentInterview = _ctx.Interviews.Include(i => i.Results).FirstOrDefault(i => i.Id == interviewId);
 
@@ -81,7 +81,7 @@ namespace NanoSurveyAPI.Controllers
             nextQuestionNumber++;
 
             // if currentQuestion is last in the survey then return 204 
-            if (nextQuestionNumber > _ctx.Surveys.FirstOrDefault(s => s.Id == surveyId).Questions.Count())
+            if (nextQuestionNumber > _ctx.Surveys.FirstOrDefault(s => s == currentQuestion.Survey).Questions.Count())
             {
                 return NoContent();
             }

@@ -20,7 +20,5 @@ namespace NanoSurveyAPI.Models
         public Survey Survey { get; set; }
 
         public ICollection<Answer> Answers { get; set; } = new List<Answer>();
-
-        //public ICollection<Result> Results { get; set; } = new List<Result>();
     }
 }
