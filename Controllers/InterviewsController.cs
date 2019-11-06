@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using NanoSurveyAPI.Models;
+using NanoSurveyAPI.ViewModels;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace NanoSurveyAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/surveys")]
     public class InterviewsController : Controller
     {
         private NanoSurveyContext _ctx;
@@ -17,20 +20,50 @@ namespace NanoSurveyAPI.Controllers
             _ctx = ctx;
         }
 
-        [HttpPut("{interviewId}")]
-        public IActionResult PutResult(int interviewId, [FromBody] int answerId)
+        [HttpPost("{surveyId}")]
+        public IActionResult PostInterview(int surveyId, [FromBody] InterviewForCreationDto interview)
         {
-            var currentInterview = _ctx.Interviews.FirstOrDefault(i => i.Id == interviewId);
+            if (interview == null)
+            {
+                return BadRequest();
+            }
+                
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            var pickedAnswer = _ctx.Answers.FirstOrDefault(a => a.Id == answerId);
+            var survey = _ctx.Surveys.FirstOrDefault(s => s.Id == surveyId);
 
-            var currentQuestion = pickedAnswer.Question;
+            if (survey == null)
+            {
+                NotFound();
+            }
+
+            survey.Interviews.Add(new Interview { FirstName = interview.FirstName, LastName = interview.LastName });
+            _ctx.SaveChanges();
+
+            return NoContent();
+        }
+
+        [HttpPut("{surveyId}/interviews/{interviewId}/questions/{questionId}")]
+        public IActionResult SavetResult(int surveyId, int interviewId, int questionId, [FromBody] int answerId)
+        {
+            var currentInterview = _ctx.Interviews.Include(i => i.Results).FirstOrDefault(i => i.Id == interviewId);
+
+            var currentQuestion = _ctx.Questions.Include(q => q.Survey).Include(q => q.Answers).FirstOrDefault(q => q.Id == questionId);
+
+            var pickedAnswer = _ctx.Answers.Include(a => a.Question).FirstOrDefault(a => a.Id == answerId);
 
             // if the question in that interview has already been answered then update it
             if (currentInterview.Results.Select(r => r.Answer).Intersect(currentQuestion.Answers).Any())
             {
+                var intersection = currentInterview.Results
+                    .Select(r => r.Answer)
+                    .Intersect(currentQuestion.Answers)
+                    .First();
                 var resultToUpdate = currentInterview.Results
-                    .FirstOrDefault(r => r.Answer.Question == currentQuestion);
+                    .FirstOrDefault(r => r.Answer == intersection);
                 resultToUpdate.Answer = pickedAnswer;
             }
             else
@@ -47,7 +80,13 @@ namespace NanoSurveyAPI.Controllers
             var nextQuestionNumber = (int)currentQuestion.Number;
             nextQuestionNumber++;
 
-            return Ok(currentInterview.Survey.Questions.FirstOrDefault(q => q.Number == nextQuestionNumber).Id);
+            // if currentQuestion is last in the survey then return 204 
+            if (nextQuestionNumber > _ctx.Surveys.FirstOrDefault(s => s.Id == surveyId).Questions.Count())
+            {
+                return NoContent();
+            }
+
+            return Ok(_ctx.Questions.FirstOrDefault(q => q.Number == nextQuestionNumber).Id);
         }
     }
 }

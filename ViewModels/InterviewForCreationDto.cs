@@ -5,14 +5,10 @@ using System.Threading.Tasks;
 
 namespace NanoSurveyAPI.ViewModels
 {
-    public class InterviewDto
+    public class InterviewForCreationDto
     {
-        public int Id { get; set; }
-
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
-
-        public DateTime Date { get; set; }
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NanoSurveyAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/surveys")]
     public class SurveysController : Controller
     {
         private NanoSurveyContext _ctx;
@@ -32,8 +32,8 @@ namespace NanoSurveyAPI.Controllers
             return Ok(surveysToReturn);
         }
 
-        [HttpGet("{surveyId}/questions/{questionId}")]
-        public IActionResult GetQuestion(int surveyId, int questionId)
+        [HttpGet("{surveyId}/questions/{questionId}/answers")]
+        public IActionResult GetAnswers(int surveyId, int questionId)
         {
             var question = _ctx.Questions.FirstOrDefault(q => q.Id == questionId);
 
